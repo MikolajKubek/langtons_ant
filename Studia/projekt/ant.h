@@ -6,7 +6,6 @@ typedef struct
 	int x;
 	int y;
 	int pos;
-	int brk;
 }*ant_t;
 
 typedef struct 
