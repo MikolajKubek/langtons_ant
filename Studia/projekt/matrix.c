@@ -33,7 +33,7 @@ void animate(mat_t matrix)
 		printf("\n");
 	}
 
-	usleep(1000000);
+	usleep(10000);
 }
 
 void free_matrix(mat_t matrix)

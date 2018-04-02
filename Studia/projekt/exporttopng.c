@@ -92,9 +92,9 @@ void process_file(mat_t matrix) {
 	}
 	else
 	{
-		row[4*x] = val(matrix->t[y][x], 1); 
-		row[4*x+1] = val(matrix->t[y][x], 2);
-		row[4*x+2] = val(matrix->t[y][x], 3);
+		row[4*x] = val(matrix->t[y][x], 3); 
+		row[4*x+1] = val(matrix->t[y][x], 4);
+		row[4*x+2] = val(matrix->t[y][x], 5);
 		row[4*x+3] = 255;
 	}
      }

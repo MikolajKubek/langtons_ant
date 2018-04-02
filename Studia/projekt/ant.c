@@ -1,64 +1,98 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <time.h>
-
 #include "ant.h"
-#include "matrix.h"
-#include "exporttopng.h"
-int main(int argc, char ** argv)
+
+void move(ant_t ant, int s)
 {
-	int tmp;
-	int r = argc > 1 ? atoi(argv[1]) : 10;
-	int c = argc > 2 ? atoi(argv[2]) : 10;
-	int amount_of_ants = argc > 3 ? atoi(argv[3]) : 3;
-	int animation = 0;
-
-	mat_t matrix = init(r, c);
-
-	for(int i = 0; i < matrix->r; i++)
-		for(int j = 0; j < matrix->c; j++)
-			matrix->t[i][j] = 0;
-	int n = 11000;//ilosc krokow do wykonania 
-
-	srand(time(NULL));
-
-
-	ants_t ants = ants_init(amount_of_ants);
-	
-	for(int i = 0; i < amount_of_ants; i++)
+	switch (ant->pos)
 	{
-		ants->ants[i]->x = rand()%r; 
-		ants->ants[i]->y = rand()%c; 
-		ants->ants[i]->pos = rand()%4 + 1; 
-	}
-	while(n-- >= 0)
-	{
-		if(animation == 1) //jesli taka opcja zostala wybrana - animacja mrowki jest wypisywana na konsole
-			animate(matrix);
-
-		for(int i = 0; i < ants->n; i++)
-		{
-			if (matrix->t[ants->ants[i]->x][ants->ants[i]->y] > 0)
+		case 1:
+			if(s == 0)
 			{
-				matrix->t[ants->ants[i]->x][ants->ants[i]->y] = 0;
-				tmp = 1;
+				ant->pos = 4;
+				ant->x--;
 			}
-			else
+			else if(s == 1)
 			{
-				matrix->t[ants->ants[i]->x][ants->ants[i]->y] = i + 1;
-				tmp = 0;
+				ant->pos = 2;
+				ant->x++;
 			}
-			move(ants->ants[i], tmp);
-			mirror(ants->ants[i], matrix->r, matrix->c);
-		}
 
-		
+		break;
+		case 2:
+			if(s == 0)
+			{
+				ant->pos = 1;
+				ant->y++;
+			}
+			else if(s == 1)
+			{
+				ant->pos = 3;
+				ant->y--;
+			}
+			
+		break;
+		case 3:
+			if(s == 0)
+			{
+				ant->pos = 2;
+				ant->x++;
+			}
+			else if(s == 1)
+			{
+				ant->pos = 4;
+				ant->x--;
+			}
+		break;
+		case 4:
+			if(s == 0)
+			{
+				ant->pos = 3;
+				ant->y--;
+			}
+			if(s == 1)
+			{
+				ant->pos = 1;
+				ant->y++;
+			}
+		break;
 	}
 
-	//animate(matrix);
-	process_file(matrix);
-	write_png_file("out.png");
-	free_matrix(matrix);
-	free_ants(ants);
 }
+
+void mirror(ant_t ant, int x, int y)
+{
+	x--;
+	y--;
+	if(ant->x < 0)
+		ant->x = x;
+	else if(ant->x > x)
+		ant->x = 0;
+
+	if(ant->y < 0)
+		ant->y = y;
+	else if(ant->y > y)
+		ant->y = 0;
+}
+
+ants_t ants_init(int n)
+{
+	ants_t ants = malloc(sizeof(ants));
+	ants->n = n;
+
+	ants->ants = malloc(n*sizeof(ants->ants));
+
+	for(int i = 0; i < n; i++)
+		ants->ants[i] = malloc(sizeof(ants->ants[i]));	
+	return ants;
+}
+
+void free_ants(ants_t ants)
+{
+	for(int i = 0; i < ants->n; i++)
+		free(ants->ants[i]);
+
+	free(ants->ants);
+
+	free(ants);
+}
+
