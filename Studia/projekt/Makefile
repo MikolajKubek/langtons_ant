@@ -1,6 +1,6 @@
 ant:
-	cc -c ant.c main.c matrix.c exporttopng.c 
-	cc -o ant ant.o main.o matrix.o exporttopng.o -lpng
+	cc -c ant.c main.c matrix.c exporttopng.c error.c 
+	cc -o ant ant.o main.o matrix.o error.o  exporttopng.o -lpng
 clean:
 	rm *.o
 	rm ant
