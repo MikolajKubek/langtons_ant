@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <time.h>
 #include <getopt.h>
-#include <ctype.h>
 
 #include "ant.h"
 #include "matrix.h"
@@ -11,6 +10,8 @@
 #include "error.h"
 int main(int argc, char ** argv)
 {
+	char *result;
+	char temp[15];
 	int opt;
 	int tmp;
 	int c = 184;
@@ -92,9 +93,86 @@ int main(int argc, char ** argv)
 
 	if(inpf != NULL)
 	{
-		printf("miejsce na wczytanie powyższych zmiennych z pliku\n");
-	}
+		FILE *in = fopen(inpf,"r");
+		if(in==NULL)
+			printf("Nie moge otworzyc pliku do odczytu\n");
+		else
+			{
+				result=fgets (temp,15,in);
+				if (result == NULL)
+					printf("Blad odczytu\n");
+				else{
+				if(atoi(temp)!=0)
+				{
+					if(checkMatrix(atoi(temp))==0)
+						c=atoi(temp);
+					else
+						printf("Przekroczono limit szerokosci\n");
+				}
+				else
+					printf("Argument podany jako szerokosc nie jest liczba\n");
+				}
+				result=fgets (temp,15,in);
+				if (result == NULL)
+					printf("Blad odczytu\n");
+				else{
+				if(atoi(temp)!=0)
+				{
+					if(checkMatrix(atoi(temp))==0)
+						r=atoi(temp);
+					else
+						printf("Przekroczono limit wysokosci\n");
+				}
+				else
+					printf("Argument podany jako wysokosc nie jest liczba\n");
+				}
+				result=fgets (temp,15,in);
+				if (result == NULL)
+					printf("Blad odczytu\n");
+				else{
+				if(atoi(temp)!=0)
+				{
+					if(checkAmount(atoi(temp))==0)
+						amount_of_ants=atoi(temp);
+					else
+						printf("Przekroczono limit liczby mrowek\n");
+				}
+				else
+					printf("Argument podany jako liczba mrowek nie jest liczba\n");
+				}
+				result=fgets (temp,15,in);
+				if (result == NULL)
+					printf("Blad odczytu\n");
+				else{
+				if(atoi(temp)!=0)
+				{
+					if(checkSteps(atoi(temp))==0)
+						n=atoi(temp);
+					else
+						printf("Przekroczono limit ilosci krokow\n");
+				}
+				else
+					printf("Argument podany jako ilosc krokow nie jest liczba\n");
+				}
+				result=fgets (temp,15,in);
+				if (result == NULL)
+					printf("Blad odczytu\n");
+				else{
+				if(atoi(temp)==0 || atoi(temp)==1)
+						animation=atoi(temp);
+				else
+					printf("Argument podany jako animacja jest niewlasciwy\n");
+				}
+				result=fgets (temp,100,in);
+					if(result == NULL)
+						printf("Blad odczytu\n");
+					else
+					{
+						outf=temp;
+					}
+			}
 
+	}
 	mat_t matrix = init(r, c);
 
 	for(int i = 0; i < matrix->r; i++)

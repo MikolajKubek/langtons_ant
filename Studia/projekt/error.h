@@ -6,7 +6,7 @@
 int checkMatrix( int x);
 int checkSteps( int x);
 int checkAmount( int x);
-int checkHeight( int cord, mat_t matrix);
-int checkWidth( int cord, mat_t matrix);
+/*int checkHeight( int cord, mat_t matrix);
+int checkWidth( int cord, mat_t matrix);*/
 
 #endif

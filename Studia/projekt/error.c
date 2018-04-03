@@ -36,7 +36,7 @@ int checkAmount( int x)
 		return 0;
 	}
 }
-int checkHeight( int cord, mat_t matrix)
+/*int checkHeight( int cord, mat_t matrix)
 {
 	if(cord<0 || cord >= matrix->r)
 	{
@@ -60,5 +60,5 @@ int checkWidth( int cord, mat_t matrix)
 		return 0;
 	}
 }
-
+*/
 
